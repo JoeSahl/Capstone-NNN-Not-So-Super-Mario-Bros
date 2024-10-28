@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=3 uid="uid://od0wk3kx2vx3"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/mario.gd" id="1_7kd61"]
+[ext_resource type="Texture2D" uid="uid://mabixv57oxtv" path="res://Assets/Sprites/Mario_Small_Jump.png" id="2_yan3j"]
+[ext_resource type="Texture2D" uid="uid://d3jwm15et3t22" path="res://Assets/Sprites/Mario_Small_Idle.png" id="3_l8i1b"]
+[ext_resource type="Texture2D" uid="uid://c8miiu7122uvw" path="res://Assets/Sprites/Mario_Small_Run1.png" id="4_4sged"]
+[ext_resource type="Texture2D" uid="uid://cpmthf3fyi2s7" path="res://Assets/Sprites/Mario_Small_Run2.png" id="5_hytn7"]
+[ext_resource type="Texture2D" uid="uid://dymgmw1kw2rtc" path="res://Assets/Sprites/Mario_Small_Run3.png" id="6_p5wx4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_un72a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_yan3j")
+}],
+"loop": true,
+"name": &"small_jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_l8i1b")
+}],
+"loop": true,
+"name": &"small_stationary",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_4sged")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hytn7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_p5wx4")
+}],
+"loop": true,
+"name": &"small_walking",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2g38c"]
+size = Vector2(15, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ug0mw"]
+size = Vector2(15, 16)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_7kd61")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_un72a")
+animation = &"small_walking"
+autoplay = "small_stationary"
+frame_progress = 0.138598
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_2g38c")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_ug0mw")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
