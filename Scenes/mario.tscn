@@ -309,6 +309,7 @@ size = Vector2(270.5, 532.5)
 
 [node name="Mario" type="CharacterBody2D"]
 position = Vector2(381, 460)
+collision_layer = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(201.75, -137.875)
@@ -326,8 +327,3 @@ shape = SubResource("RectangleShape2D_byxas")
 position = Vector2(199.75, -139.25)
 shape = SubResource("RectangleShape2D_01w6m")
 disabled = true
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(202, -135)
-position_smoothing_enabled = true
-position_smoothing_speed = 10.0
