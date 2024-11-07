@@ -1,12 +1,18 @@
 extends CharacterBody2D
 
-const WALK_SPEED = 400.0
-const RUN_SPEED = 500.0
-const JUMP_VELOCITY = -600.0
+const GRAVITY = 1500.0
+const AIR_GRAVITY = 6000.0
+const WALK_SPEED = 1300.0
+const RUN_SPEED = 1800.0
+const JUMP_VELOCITY = -4200.0
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape_small = $SmallCollisionShape2D
 @onready var collision_shape_large = $Big_FireCollisionShape2D
 var is_large = false;
+
+func _ready():
+	collision_shape_small.disabled = false;
+	collision_shape_large.disabled = true;
 
 func _physics_process(delta: float) -> void:
 	# Animations
@@ -21,22 +27,27 @@ func _physics_process(delta: float) -> void:
 	
 	# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity.y += AIR_GRAVITY * delta
 		animated_sprite_2d.animation = "small_jump"
+	else:
+		velocity.y += GRAVITY * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
-	var direction := Input.get_axis("ui_left", "ui_right")
+	var direction := Input.get_axis("left", "right")
 	if direction:
 		velocity.x = direction * WALK_SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, 12)
 
 	# Flips the sprite based on direction.
-	animated_sprite_2d.flip_h = velocity.x < 0
+	if direction > 0:
+		animated_sprite_2d.flip_h = false
+	elif direction < 0:
+		animated_sprite_2d.flip_h = true
 
 	# Handles running.
 	if Input.is_key_pressed(Key.KEY_RIGHT) and Input.is_key_pressed(Key.KEY_SHIFT):
@@ -51,7 +62,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0;
 
 	# Handles crouching.
-	if is_large and Input.is_action_pressed("ui_down"):
+	if is_large and Input.is_action_pressed("crouch"):
 		animated_sprite_2d.animation = "big_crouch"
 		velocity.x = 0;
 
@@ -63,7 +74,7 @@ func grow():
 		is_large = true;
 		collision_shape_small.disabled = true;
 		collision_shape_large.disabled = false;
-		animated_sprite_2d.animation = "grow_&_shrink"
+		animated_sprite_2d.play("grow_&_shrink")
 		animated_sprite_2d.animation = "big_stationary"
 
 # Handles shrinking after taking damage (NOT DONE YET)
@@ -72,5 +83,5 @@ func shrink():
 		is_large = false;
 		collision_shape_small.disabled = false;
 		collision_shape_large.disabled = true;
-		animated_sprite_2d.animation = "grow_&_shrink"
+		animated_sprite_2d.play_backwards("grow_&_shrink")
 		animated_sprite_2d.animation = "small_stationary"
