@@ -1,5 +1,6 @@
-[gd_scene load_steps=42 format=3 uid="uid://be7kxaj60avw6"]
+[gd_scene load_steps=43 format=3 uid="uid://be7kxaj60avw6"]
 
+[ext_resource type="Script" path="res://scripts/mario.gd" id="1_cplvl"]
 [ext_resource type="Texture2D" uid="uid://cc84mdnh7uy64" path="res://sprites/extra_mario_sprites.png" id="1_t31f0"]
 [ext_resource type="Texture2D" uid="uid://b75ik6jxthooh" path="res://sprites/Mario_Big_Pole.png" id="2_vijui"]
 [ext_resource type="Texture2D" uid="uid://dep8iuq24h7qk" path="res://sprites/Mario_Big_Jump.png" id="3_hfwiy"]
@@ -242,9 +243,9 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("4_q17w8")
 }],
-"loop": true,
+"loop": false,
 "name": &"grow_&_shrink",
-"speed": 4.0
+"speed": 3.0
 }, {
 "frames": [],
 "loop": true,
@@ -307,15 +308,16 @@ size = Vector2(203, 265)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_01w6m"]
 size = Vector2(270.5, 532.5)
 
-[node name="Mario" type="CharacterBody2D"]
+[node name="Mario" type="CharacterBody2D" groups=["Mario"]]
 position = Vector2(381, 460)
 collision_layer = 2
+script = ExtResource("1_cplvl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(201.75, -137.875)
 scale = Vector2(16.9063, 16.6406)
 sprite_frames = SubResource("SpriteFrames_dbjqc")
-animation = &"grow_&_shrink"
+animation = &"small_flagpole"
 autoplay = "small_stationary"
 speed_scale = 2.0
 
@@ -327,3 +329,5 @@ shape = SubResource("RectangleShape2D_byxas")
 position = Vector2(199.75, -139.25)
 shape = SubResource("RectangleShape2D_01w6m")
 disabled = true
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
