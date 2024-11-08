@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://dhv1phnor1ctp"]
+
+[ext_resource type="Script" path="res://scripts/flagpole.gd" id="1_e4xww"]
+[ext_resource type="Texture2D" uid="uid://ix4she7qhgon" path="res://sprites/NES - Super Mario Bros - Tileset.png" id="2_j3r57"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pe7tc"]
+atlas = ExtResource("2_j3r57")
+region = Rect2(0, 593, 16, 171)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6qnoh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pe7tc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mn615"]
+size = Vector2(2, 143)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dgd3q"]
+size = Vector2(16, 17)
+
+[node name="Flagpole" type="Area2D"]
+script = ExtResource("1_e4xww")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6qnoh")
+
+[node name="PoleCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_mn615")
+
+[node name="BaseCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 77.5)
+shape = SubResource("RectangleShape2D_dgd3q")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bxymtjy3ph456"]
+
+[ext_resource type="Script" path="res://scripts/fire_flower.gd" id="1_qy7tv"]
+[ext_resource type="Texture2D" uid="uid://coojpw3xngwxw" path="res://sprites/miscellaneous_sprites.png" id="2_h16ct"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfwwy"]
+atlas = ExtResource("2_h16ct")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oexr1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfwwy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c6u1u"]
+size = Vector2(16, 16)
+
+[node name="FireFlower" type="Area2D"]
+script = ExtResource("1_qy7tv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_oexr1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_c6u1u")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
