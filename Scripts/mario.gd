@@ -8,13 +8,17 @@ const JUMP_VELOCITY = -4200.0
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape_small = $SmallCollisionShape2D
 @onready var collision_shape_large = $Big_FireCollisionShape2D
-var is_large = false;
+var is_large = true
+var is_growing_or_shrinking = false
 
 func _ready():
 	collision_shape_small.disabled = false;
 	collision_shape_large.disabled = true;
 
 func _physics_process(delta: float) -> void:
+	if is_growing_or_shrinking:
+		return
+	
 	# Animations
 	if (velocity.x > 1 || velocity.x < -1):
 		animated_sprite_2d.animation = "small_walking"
@@ -68,20 +72,40 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-# Handles growing after collecting an item (NOT DONE YET)
+# Handles growing after collecting an item
 func grow():
-	if not is_large:
+	if not is_large and not is_growing_or_shrinking:
 		is_large = true;
+		is_growing_or_shrinking = true
 		collision_shape_small.disabled = true;
 		collision_shape_large.disabled = false;
-		animated_sprite_2d.play("grow_&_shrink")
-		animated_sprite_2d.animation = "big_stationary"
+		animated_sprite_2d.animation = "grow_&_shrink"
+		animated_sprite_2d.play()
 
-# Handles shrinking after taking damage (NOT DONE YET)
+# Handles shrinking after taking damage
 func shrink():
-	if is_large:
+	if is_large and not is_growing_or_shrinking:
 		is_large = false;
+		is_growing_or_shrinking = true
 		collision_shape_small.disabled = false;
 		collision_shape_large.disabled = true;
-		animated_sprite_2d.play_backwards("grow_&_shrink")
-		animated_sprite_2d.animation = "small_stationary"
+		animated_sprite_2d.animation = "grow_&_shrink"
+		animated_sprite_2d.play_backwards()
+
+# Handles animation for growing and shrinking (NEEDS WORK)
+func _on_AnimatedSprit2D_animation_finished() -> void:
+	if animated_sprite_2d.animation == "grow_&_shrink":
+		if not is_large:
+			animated_sprite_2d.animation = "big_stationary"
+			animated_sprite_2d.play()
+			is_growing_or_shrinking = false;
+		else:
+			animated_sprite_2d.animation = "small_stationary"
+			animated_sprite_2d.play()
+			is_growing_or_shrinking = false;
+
+# Handles animation for reaching the flagpole (NOT DONE)
+func poleReached():
+	animated_sprite_2d.animation = "small_flagpole"
+	animated_sprite_2d.play()
+	
