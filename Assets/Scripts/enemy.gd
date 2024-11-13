@@ -35,3 +35,5 @@ func die():
 	vertical_speed = 0;
 	animation.play("dead")
 	isdead = true
+	await get_tree().create_timer(0.5).timeout
+	queue_free()
