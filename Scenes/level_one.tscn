@@ -1,10 +1,12 @@
-[gd_scene load_steps=12 format=4 uid="uid://cblqcm07j1iun"]
+[gd_scene load_steps=14 format=4 uid="uid://cblqcm07j1iun"]
 
 [ext_resource type="PackedScene" uid="uid://be7kxaj60avw6" path="res://scenes/mario.tscn" id="1_wh4xu"]
 [ext_resource type="Texture2D" uid="uid://ix4she7qhgon" path="res://sprites/NES - Super Mario Bros - Tileset.png" id="3_dnmmw"]
+[ext_resource type="PackedScene" uid="uid://bxymtjy3ph456" path="res://scenes/fire_flower.tscn" id="4_1gstc"]
 [ext_resource type="PackedScene" uid="uid://dp2b0t12a1ed6" path="res://scenes/mushroom.tscn" id="4_qqgte"]
 [ext_resource type="PackedScene" uid="uid://dhv1phnor1ctp" path="res://scenes/flagpole.tscn" id="4_we7k2"]
 [ext_resource type="PackedScene" uid="uid://bafg26o1vcq71" path="res://scenes/killzone.tscn" id="5_25q2r"]
+[ext_resource type="PackedScene" uid="uid://c3ysdxlew3krg" path="res://scenes/fireball.tscn" id="6_icwci"]
 
 [sub_resource type="GDScript" id="GDScript_fpwit"]
 script/source = "extends Node2D
@@ -6002,10 +6004,11 @@ sources/2 = SubResource("TileSetAtlasSource_kluwt")
 [node name="Level_One" type="Node2D"]
 script = SubResource("GDScript_fpwit")
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("1_wh4xu")]
+[node name="Mario" parent="." instance=ExtResource("1_wh4xu")]
 position = Vector2(80, -88)
+fireball_scene = ExtResource("6_icwci")
 
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+[node name="Camera2D" type="Camera2D" parent="Mario"]
 position = Vector2(1975, -93)
 scale = Vector2(10, 10)
 zoom = Vector2(0.15, 0.15)
@@ -6026,6 +6029,13 @@ tile_set = SubResource("TileSet_2e71t")
 [node name="Mushroom" parent="." instance=ExtResource("4_qqgte")]
 position = Vector2(3352, -1142)
 scale = Vector2(16, 16)
+
+[node name="FireFlower" parent="." instance=ExtResource("4_1gstc")]
+position = Vector2(4756, -1146)
+scale = Vector2(16, 16)
+
+[node name="Fireball" parent="." instance=ExtResource("6_icwci")]
+position = Vector2(-562, 1563)
 
 [node name="Flagpole" parent="." instance=ExtResource("4_we7k2")]
 position = Vector2(64057, -1406)
