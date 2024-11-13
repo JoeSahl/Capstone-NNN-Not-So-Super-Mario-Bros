@@ -1,0 +1,73 @@
+[gd_scene load_steps=12 format=3 uid="uid://c3ysdxlew3krg"]
+
+[ext_resource type="Script" path="res://scripts/fireball.gd" id="1_gxav3"]
+[ext_resource type="Texture2D" uid="uid://coojpw3xngwxw" path="res://sprites/miscellaneous_sprites.png" id="2_vu5iw"]
+[ext_resource type="Texture2D" uid="uid://bgjqheqtkdt2q" path="res://sprites/fireball1.png" id="3_v3n5w"]
+[ext_resource type="Texture2D" uid="uid://c1c46niwi7h14" path="res://sprites/fireball3.png" id="4_f036h"]
+[ext_resource type="Texture2D" uid="uid://dx28jogm8hujo" path="res://sprites/fireball4.png" id="5_3niol"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ffjsk"]
+atlas = ExtResource("2_vu5iw")
+region = Rect2(100, 164, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynmgl"]
+atlas = ExtResource("2_vu5iw")
+region = Rect2(114, 161, 12, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aylg4"]
+atlas = ExtResource("2_vu5iw")
+region = Rect2(129, 160, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7rj2x"]
+atlas = ExtResource("2_vu5iw")
+region = Rect2(96, 144, 9, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mma5d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ffjsk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ynmgl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aylg4")
+}],
+"loop": false,
+"name": &"exploding",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_v3n5w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7rj2x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_f036h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_3niol")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1rlfc"]
+radius = 4.0
+
+[node name="Fireball" type="Area2D"]
+scale = Vector2(20, 20)
+script = ExtResource("1_gxav3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_mma5d")
+animation = &"moving"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1rlfc")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
