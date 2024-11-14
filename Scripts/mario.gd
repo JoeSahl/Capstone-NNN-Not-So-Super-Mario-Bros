@@ -10,6 +10,7 @@ var is_throwing = false
 @onready var collision_shape_small = $SmallCollisionShape2D
 @onready var collision_shape_large = $Big_FireCollisionShape2D
 @onready var fireball_timer = $FireballTimer
+@onready var death_timer = $DeathTimer
 
 const GRAVITY = 1500.0
 const AIR_GRAVITY = 3900.0
@@ -19,6 +20,7 @@ const JUMP_VELOCITY = -2300.0
 
 var state = "small"
 
+var is_alive = true
 var is_big = false
 var is_fire = false
 var can_grow = true
@@ -30,6 +32,9 @@ func _ready():
 	fireball_timer.connect("timeout", Callable(self, "on_FireballTimer_timeout"))
 
 func _physics_process(delta: float) -> void:
+	if not is_alive:
+		return
+	
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
@@ -188,16 +193,7 @@ func _on_fireball_timer_timeout() -> void:
 	is_throwing = false
 	can_throw = true
 
-# Handles shrinking after taking damage (NEEDS TESTING)
-func shrink():
-	state = "small"
-	is_big = false
-	can_grow = true
-	set_physics_process(false)
-	animated_sprite_2d.animation = "grow_&_shrink"
-	animated_sprite_2d.play_backwards()
-
-# Handles powering down after taking damage (NEEDS TESTING)
+# Handles powering down after taking damage
 func weaken():
 	state = "big"
 	is_fire = false
@@ -206,14 +202,28 @@ func weaken():
 	animated_sprite_2d.animation = "big_power_up"
 	animated_sprite_2d.play_backwards()
 
+# Handles shrinking after taking damage
+func shrink():
+	state = "small"
+	is_big = false
+	can_grow = true
+	set_physics_process(false)
+	animated_sprite_2d.animation = "grow_&_shrink"
+	animated_sprite_2d.play_backwards()
+
 # Handles deaths (NEEDS WORK)
 func death():
-	animated_sprite_2d.animation = "death"
-	animated_sprite_2d.play()
+	is_alive = false
+	set_physics_process(false)
+	animated_sprite_2d.play("death")
+	death_timer.start()
 
-# Handles animation for growing, shrinking, powering up, and attacking (NEEDS WORK)
+func _on_death_timer_timeout() -> void:
+	get_tree().reload_current_scene()
+
+# Handles animation for growing, shrinking, and powering up
 func _on_animated_sprite_2d_animation_finished() -> void:
-	if animated_sprite_2d.animation == "grow_&_shrink":
+	if animated_sprite_2d.animation == "grow_&_shrink" or animated_sprite_2d.animation == "small_power_up" or animated_sprite_2d.animation == "big_power_up":
 		if state == "big":
 			animated_sprite_2d.animation = "big_stationary"
 			animated_sprite_2d.play()
@@ -222,15 +232,32 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 			animated_sprite_2d.animation = "small_stationary"
 			animated_sprite_2d.play()
 			set_physics_process(true)
-	elif animated_sprite_2d.animation == "small_power_up" or animated_sprite_2d.animation == "big_power_up":
-		if state == "fire":
+		elif state == "fire":
 			animated_sprite_2d.animation = "fire_stationary"
 			animated_sprite_2d.play()
 			set_physics_process(true)
-#	elif animated_sprite_2d.animation == "fire_throwing":
-#		if state == "fire":
-#			animated_sprite_2d.animation = "fire_stationary"
-#			animated_sprite_2d.play()
+
+# Handles interactions with enemies (NOT DONE/NEEDS KOOPA BEHAVIOR)
+func _on_hitbox_area_entered(area) -> void:
+	if area.is_in_group("Enemy") and is_alive:
+		handle_enemy_collision(area)
+
+func handle_enemy_collision(area):
+	if area == null:
+		return
+
+	if velocity.y > 0:
+		var enemy_sprite = area.get_node("AnimatedSprite2D")
+		if enemy_sprite.animation != "dead":
+			velocity.y = JUMP_VELOCITY/2
+			area.die_to_stomp()
+	elif velocity.y <= 0:
+		if state == "fire":
+			weaken()
+		elif state == "big":
+			shrink()
+		elif state == "small":
+			death()
 
 # Handles animation for reaching the flagpole (NOT DONE)
 func poleReached():
