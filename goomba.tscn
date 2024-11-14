@@ -1,0 +1,69 @@
+[gd_scene load_steps=7 format=3 uid="uid://4pvfbesis6d7"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_eabuu"]
+[ext_resource type="Texture2D" uid="uid://dcsxrgryxwrsi" path="res://sprites/Goomba_Flat.png" id="2_74itw"]
+[ext_resource type="Texture2D" uid="uid://tggxeo0q81ht" path="res://sprites/Goomba_Walk1.png" id="3_q4xmt"]
+[ext_resource type="Texture2D" uid="uid://cyqrra5r0fu73" path="res://sprites/Goomba_Walk2.png" id="4_ul7m3"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4qhfq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_74itw")
+}],
+"loop": false,
+"name": &"dead",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_q4xmt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ul7m3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7xncj"]
+size = Vector2(16, 16)
+
+[node name="AI_Goomba" type="Area2D" groups=["Enemy"]]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_eabuu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4qhfq")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7xncj")
+
+[node name="RayCastDown" type="RayCast2D" parent="."]
+target_position = Vector2(0, 8)
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-8, 0)
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+target_position = Vector2(8, 0)
+
+[node name="RayCastBottomLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-9, 9)
+
+[node name="RayCastBottomRight" type="RayCast2D" parent="."]
+target_position = Vector2(9, 9)
+
+[node name="StompDeathTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="FireDeathTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="StompDeathTimer" to="." method="_on_stomp_death_timer_timeout"]
+[connection signal="timeout" from="FireDeathTimer" to="." method="_on_fire_death_timer_timeout"]
