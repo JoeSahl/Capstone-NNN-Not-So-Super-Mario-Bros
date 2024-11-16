@@ -3,7 +3,12 @@ extends Enemy
 @onready var raycast_br = $RayCastBottomRight as RayCast2D
 @onready var raycast_bl = $RayCastBottomLeft as RayCast2D
 
+
 func _process(delta):
+	
+	if !isdead:
+		horizontal_speed = 5
+	
 	position.x -= delta * horizontal_speed
 
 	if !raycast_down.is_colliding():

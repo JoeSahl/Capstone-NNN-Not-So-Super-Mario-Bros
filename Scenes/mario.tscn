@@ -1,17 +1,268 @@
-[gd_scene load_steps=10 format=3 uid="uid://od0wk3kx2vx3"]
+[gd_scene load_steps=41 format=3 uid="uid://be7kxaj60avw6"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/mario.gd" id="1_7kd61"]
-[ext_resource type="Texture2D" uid="uid://mabixv57oxtv" path="res://Assets/Sprites/Mario_Small_Jump.png" id="2_yan3j"]
-[ext_resource type="Texture2D" uid="uid://d3jwm15et3t22" path="res://Assets/Sprites/Mario_Small_Idle.png" id="3_l8i1b"]
-[ext_resource type="Texture2D" uid="uid://c8miiu7122uvw" path="res://Assets/Sprites/Mario_Small_Run1.png" id="4_4sged"]
-[ext_resource type="Texture2D" uid="uid://cpmthf3fyi2s7" path="res://Assets/Sprites/Mario_Small_Run2.png" id="5_hytn7"]
-[ext_resource type="Texture2D" uid="uid://dymgmw1kw2rtc" path="res://Assets/Sprites/Mario_Small_Run3.png" id="6_p5wx4"]
+[ext_resource type="Script" path="res://Assets/Scripts/mario.gd" id="1_cplvl"]
+[ext_resource type="Texture2D" uid="uid://b60qshvo8oxvr" path="res://Assets/Sprites/extra_mario_sprites.png" id="1_t31f0"]
+[ext_resource type="Texture2D" uid="uid://djutcw71jpypl" path="res://Assets/Sprites/Mario_Big_Pole.png" id="2_vijui"]
+[ext_resource type="Texture2D" uid="uid://v53slnui25kk" path="res://Assets/Sprites/Mario_Big_Jump.png" id="3_hfwiy"]
+[ext_resource type="Texture2D" uid="uid://0bbli8wj08w" path="res://Assets/Sprites/Mario_Big_Idle.png" id="4_q17w8"]
+[ext_resource type="Texture2D" uid="uid://juu41jn164ee" path="res://Assets/Sprites/Mario_Big_Slide.png" id="5_4q5o2"]
+[ext_resource type="Texture2D" uid="uid://cfmun3wcr2xmy" path="res://Assets/Sprites/Mario_Big_Run1.png" id="6_6uqsb"]
+[ext_resource type="Texture2D" uid="uid://s0qxrmrk2ios" path="res://Assets/Sprites/Mario_Big_Run2.png" id="7_4gohm"]
+[ext_resource type="Texture2D" uid="uid://dwureni7dcvsk" path="res://Assets/Sprites/Mario_Big_Run3.png" id="8_r0y14"]
+[ext_resource type="Texture2D" uid="uid://bvgn5fhj5keh0" path="res://Assets/Sprites/Mario_Small_Death.png" id="9_rxg1q"]
+[ext_resource type="Texture2D" uid="uid://dsjb7gps7mq20" path="res://Assets/Sprites/Mario_Shooting_Pole.png" id="11_0303c"]
+[ext_resource type="Texture2D" uid="uid://caydlapsqfcqv" path="res://Assets/Sprites/Mario_Shooting_Jump.png" id="12_icbpi"]
+[ext_resource type="Texture2D" uid="uid://bdyqn1ag6paan" path="res://Assets/Sprites/Mario_Shooting_Idle.png" id="13_8nuio"]
+[ext_resource type="Texture2D" uid="uid://bdin4eodnvvmb" path="res://Assets/Sprites/Mario_Shooting-Slide.png" id="14_dc853"]
+[ext_resource type="Texture2D" uid="uid://drgti70hhs0i2" path="res://Assets/Sprites/Mario_Shooting_Run1.png" id="16_6kf8x"]
+[ext_resource type="Texture2D" uid="uid://dvyxvsk7pcf8t" path="res://Assets/Sprites/Mario_Shooting_Run2.png" id="17_0heo7"]
+[ext_resource type="Texture2D" uid="uid://b3fwpomyic5v6" path="res://Assets/Sprites/Mario_Shooting_Run3.png" id="18_20lr4"]
+[ext_resource type="Texture2D" uid="uid://8nir3p0v5qd2" path="res://Assets/Sprites/Mario_Small_Pole.png" id="22_i1gdw"]
+[ext_resource type="Texture2D" uid="uid://b3gl58gd2nneu" path="res://Assets/Sprites/Mario_Small_Jump.png" id="23_hmft4"]
+[ext_resource type="Texture2D" uid="uid://1os0krop1yfe" path="res://Assets/Sprites/Mario_Small_Idle.png" id="24_27rw0"]
+[ext_resource type="Texture2D" uid="uid://drmh04d5u1rss" path="res://Assets/Sprites/Mario_Small_Slide.png" id="25_gba4p"]
+[ext_resource type="Texture2D" uid="uid://ckqx28lu4ngfr" path="res://Assets/Sprites/Mario_Small_Run1.png" id="26_q68v2"]
+[ext_resource type="Texture2D" uid="uid://cuvblcqcixfru" path="res://Assets/Sprites/Mario_Small_Run2.png" id="27_y04ow"]
+[ext_resource type="Texture2D" uid="uid://l0m5qdnnlfge" path="res://Assets/Sprites/Mario_Small_Run3.png" id="28_cwkkg"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_un72a"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sev7j"]
+atlas = ExtResource("1_t31f0")
+region = Rect2(176, 10, 16, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cp2gh"]
+atlas = ExtResource("1_t31f0")
+region = Rect2(193, 2, 14, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4rfve"]
+atlas = ExtResource("1_t31f0")
+region = Rect2(80, 144, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qc002"]
+atlas = ExtResource("1_t31f0")
+region = Rect2(80, 96, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ol044"]
+atlas = ExtResource("1_t31f0")
+region = Rect2(176, 106, 16, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vyfaa"]
+atlas = ExtResource("1_t31f0")
+region = Rect2(193, 98, 14, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86uxu"]
+atlas = ExtResource("1_t31f0")
+region = Rect2(336, 97, 16, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oc6cj"]
+atlas = ExtResource("1_t31f0")
+region = Rect2(352, 97, 16, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8otha"]
+atlas = ExtResource("1_t31f0")
+region = Rect2(368, 97, 16, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gicoo"]
+atlas = ExtResource("1_t31f0")
+region = Rect2(320, 8, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ianc"]
+atlas = ExtResource("1_t31f0")
+region = Rect2(210, 33, 12, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5i34l"]
+atlas = ExtResource("1_t31f0")
+region = Rect2(320, 152, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7m7f1"]
+atlas = ExtResource("1_t31f0")
+region = Rect2(320, 104, 16, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dbjqc"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_yan3j")
+"texture": SubResource("AtlasTexture_sev7j")
+}],
+"loop": true,
+"name": &"big_crouch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cp2gh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_vijui")
+}],
+"loop": true,
+"name": &"big_flagpole",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_hfwiy")
+}],
+"loop": true,
+"name": &"big_jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_q17w8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4rfve")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qc002")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4rfve")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qc002")
+}],
+"loop": false,
+"name": &"big_power_up",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_q17w8")
+}],
+"loop": true,
+"name": &"big_stationary",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_4q5o2")
+}],
+"loop": true,
+"name": &"big_stopping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_6uqsb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_4gohm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_r0y14")
+}],
+"loop": true,
+"name": &"big_walking",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_rxg1q")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ol044")
+}],
+"loop": true,
+"name": &"fire_crouch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vyfaa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_0303c")
+}],
+"loop": true,
+"name": &"fire_flagpole",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_icbpi")
+}],
+"loop": true,
+"name": &"fire_jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_8nuio")
+}],
+"loop": true,
+"name": &"fire_stationary",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_dc853")
+}],
+"loop": true,
+"name": &"fire_stopping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86uxu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oc6cj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8otha")
+}],
+"loop": false,
+"name": &"fire_throwing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_6kf8x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_0heo7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_20lr4")
+}],
+"loop": true,
+"name": &"fire_walking",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_27rw0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gicoo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_q17w8")
+}],
+"loop": false,
+"name": &"grow_&_shrink",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ianc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_i1gdw")
+}],
+"loop": true,
+"name": &"small_flagpole",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("23_hmft4")
 }],
 "loop": true,
 "name": &"small_jump",
@@ -19,7 +270,27 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_l8i1b")
+"texture": ExtResource("24_27rw0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5i34l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7m7f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4rfve")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qc002")
+}],
+"loop": false,
+"name": &"small_power_up",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_27rw0")
 }],
 "loop": true,
 "name": &"small_stationary",
@@ -27,44 +298,58 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_4sged")
+"texture": ExtResource("25_gba4p")
+}],
+"loop": true,
+"name": &"small_stopping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("26_q68v2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_hytn7")
+"texture": ExtResource("27_y04ow")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_p5wx4")
+"texture": ExtResource("28_cwkkg")
 }],
 "loop": true,
 "name": &"small_walking",
-"speed": 8.0
+"speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2g38c"]
-size = Vector2(15, 16)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_byxas"]
+size = Vector2(203, 265)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ug0mw"]
-size = Vector2(15, 16)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_01w6m"]
+size = Vector2(270.5, 532.5)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
-script = ExtResource("1_7kd61")
+[node name="Mario" type="CharacterBody2D" groups=["Mario"]]
+position = Vector2(381, 460)
+collision_layer = 2
+script = ExtResource("1_cplvl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_un72a")
-animation = &"small_walking"
+position = Vector2(201.75, -137.875)
+scale = Vector2(16.9063, 16.6406)
+sprite_frames = SubResource("SpriteFrames_dbjqc")
+animation = &"fire_throwing"
 autoplay = "small_stationary"
-frame_progress = 0.138598
+frame = 2
+frame_progress = 1.0
+speed_scale = 2.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 0)
-shape = SubResource("RectangleShape2D_2g38c")
+[node name="SmallCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(201.5, -138.5)
+shape = SubResource("RectangleShape2D_byxas")
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 3
+[node name="Big_FireCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(199.75, -139.25)
+shape = SubResource("RectangleShape2D_01w6m")
+disabled = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-0.5, 0)
-shape = SubResource("RectangleShape2D_ug0mw")
+[node name="FireballTimer" type="Timer" parent="."]
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="FireballTimer" to="." method="_on_fireball_timer_timeout"]

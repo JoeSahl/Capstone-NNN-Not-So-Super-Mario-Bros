@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://l0m5qdnnlfge"
-path="res://.godot/imported/Mario_Small_Run3.png-72aed5e5c29d3b3de38d5ca2dc3b1919.ctex"
+uid="uid://bvgn5fhj5keh0"
+path="res://.godot/imported/Mario_Small_Death.png-e5df1082cb6ea11bb1b5b82a539cc192.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Mario_Small_Run3.png"
-dest_files=["res://.godot/imported/Mario_Small_Run3.png-72aed5e5c29d3b3de38d5ca2dc3b1919.ctex"]
+source_file="res://Assets/Sprites/Mario_Small_Death.png"
+dest_files=["res://.godot/imported/Mario_Small_Death.png-e5df1082cb6ea11bb1b5b82a539cc192.ctex"]
 
 [params]
 

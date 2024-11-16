@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c6pn0gacqoe7y"]
+[gd_scene load_steps=7 format=3 uid="uid://bovy614tnovul"]
 
 [ext_resource type="Texture2D" uid="uid://dp7aensl4rm52" path="res://Assets/Sprites/Brick.png" id="1_hftc7"]
 [ext_resource type="PackedScene" uid="uid://od0wk3kx2vx3" path="res://Scenes/mario.tscn" id="2_stnag"]
