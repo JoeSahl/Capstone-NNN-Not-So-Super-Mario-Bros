@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://ct55ehfp1a632"]
+
+[ext_resource type="Texture2D" uid="uid://d1eg7i7ru8il" path="res://sprites/Koopa_Shell.png" id="1_ba0ih"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_c0jyv"]
+[ext_resource type="Texture2D" uid="uid://dw54is78it84v" path="res://sprites/Koopa_Walk1.png" id="2_cih3g"]
+[ext_resource type="Texture2D" uid="uid://c4bs0fxnf5ix5" path="res://sprites/Koopa_Walk2.png" id="3_a16wg"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f01av"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ba0ih")
+}],
+"loop": false,
+"name": &"shell",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cih3g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_a16wg")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fqd4p"]
+size = Vector2(16, 23)
+
+[node name="AI_Koopa" type="Area2D" groups=["Enemy", "Koopa"]]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_c0jyv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 2.98023e-08)
+scale = Vector2(1, 0.958333)
+sprite_frames = SubResource("SpriteFrames_f01av")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_fqd4p")
+
+[node name="RayCastDown" type="RayCast2D" parent="."]
+target_position = Vector2(0, 11)
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-8, 0)
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+target_position = Vector2(8, 0)
+
+[node name="RayCastBottomLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-8, 11)
+
+[node name="RayCastBottomRight" type="RayCast2D" parent="."]
+target_position = Vector2(8, 11)
+
+[node name="FireDeathTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

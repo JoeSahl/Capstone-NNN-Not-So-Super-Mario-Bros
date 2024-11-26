@@ -4,6 +4,8 @@ extends Area2D
 @export var horizontal_speed = 120
 @export var vertical_speed = 300
 @export var isdead = false
+@export var isInShell = false
+@export var isShellMoving = false
 
 @onready var raycast_down = $RayCastDown as RayCast2D 
 @onready var raycast_left = $RayCastLeft as RayCast2D
@@ -25,12 +27,35 @@ func _process(delta):
 		horizontal_speed = 120
 		get_child(0).flip_h = false;
 
-func die_to_stomp():
+func die_to_stomp(): # Goomba exclusive
 	horizontal_speed = 0;
 	vertical_speed = 0;
 	animation.play("dead")
 	isdead = true
 	stomp_death_timer.start()
+
+func get_in_shell(): # Koopa exclusive
+	if not isInShell: 
+		horizontal_speed = 0;
+		vertical_speed = 0;
+		animation.play("shell")
+		isInShell = true
+	else:
+		if isShellMoving:
+			horizontal_speed = 0
+			isShellMoving = false
+
+func kick_shell(direction):
+	if isInShell and not isShellMoving:
+		isShellMoving = true
+		horizontal_speed = 900 * direction
+
+func _on_area_entered(area) -> void:
+	if isShellMoving:
+		if area.is_in_group("Enemy"):
+			area.die_to_fire()
+	else:
+		pass
 
 func die_to_fire():
 	horizontal_speed = 0;
@@ -46,4 +71,4 @@ func _on_stomp_death_timer_timeout() -> void:
 	queue_free() # Removes goomba
 
 func _on_fire_death_timer_timeout() -> void:
-	queue_free() # Removes goomba
+	queue_free() # Removes goomba and koopa
