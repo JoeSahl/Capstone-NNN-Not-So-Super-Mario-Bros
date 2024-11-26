@@ -11,6 +11,7 @@ var is_throwing = false
 @onready var collision_shape_large = $Big_FireCollisionShape2D
 @onready var fireball_timer = $FireballTimer
 @onready var death_timer = $DeathTimer
+@onready var flagpole = $"../Flagpole"
 
 const GRAVITY = 1500.0
 const AIR_GRAVITY = 3900.0
@@ -21,6 +22,10 @@ const JUMP_VELOCITY = -2300.0
 var state = "small"
 
 var is_alive = true
+var is_sliding = false
+var sliding_velocity = Vector2(0, 100)
+var reached_bottom = false
+var target_position = Vector2(66055, 258)
 var is_big = false
 var is_fire = false
 var can_grow = true
@@ -30,6 +35,10 @@ func _ready():
 	collision_shape_small.disabled = false
 	collision_shape_large.disabled = true
 	fireball_timer.connect("timeout", Callable(self, "on_FireballTimer_timeout"))
+	if flagpole != null:
+		flagpole.connect("flagpole_touched", Callable(self, "_on_flagpole_touched"))
+	else:
+		print("no flagpole")
 
 func _physics_process(delta: float) -> void:
 	if not is_alive:
@@ -70,6 +79,23 @@ func _physics_process(delta: float) -> void:
 		_big_movement(delta)
 	elif state == "fire":
 		_fire_movement(delta)
+
+# Helps handle sliding behavior
+#	if is_sliding:
+#		position.y += sliding_velocity.y * delta
+#		
+#		if position.y >= -41:
+#			is_sliding = false
+#			reached_bottom = true
+#			if state == "small":
+#				animated_sprite_2d.play("small_stationary")
+#				walk_to_castle()
+#			elif state == "big":
+#				animated_sprite_2d.play("big_stationary")
+#				walk_to_castle()
+#			elif state == "fire":
+#				animated_sprite_2d.play("fire_stationary")
+#				walk_to_castle()
 
 	move_and_slide()
 
@@ -247,23 +273,41 @@ func handle_enemy_collision(area):
 		return
 
 	if velocity.y > 0:
-		var enemy_sprite = area.get_node("AnimatedSprite2D")
-		if enemy_sprite.animation != "dead":
+		if area.is_in_group("Goomba") and area.get_node("AnimatedSprite2D").animation != "dead":
 			velocity.y = JUMP_VELOCITY/2
 			area.die_to_stomp()
-	elif velocity.y <= 0:
-		if state == "fire":
-			weaken()
-		elif state == "big":
-			shrink()
-		elif state == "small":
-			death()
+		if area.is_in_group("Koopa"):
+			velocity.y = JUMP_VELOCITY/2
+			area.get_in_shell()
+	else:
+		var direction
+		if area.is_in_group("Koopa") and area.isInShell:
+			direction = -1
+			if animated_sprite_2d.flip_h:
+				direction = 1
+			area.kick_shell(direction)
+		else:
+			if state == "fire":
+				weaken()
+			elif state == "big":
+				shrink()
+			elif state == "small":
+				death()
 
-# Handles animation for reaching the flagpole (NOT DONE)
-func poleReached():
-	if state == "small":
-		animated_sprite_2d.animation = "small_flagpole"
-		animated_sprite_2d.play()
-	elif state == "big":
-		animated_sprite_2d.animation = "big_flagpole"
-		animated_sprite_2d.play()
+# Handles animation for beating the level (NOT DONE)
+func _on_flagpole_touched():
+	if not is_sliding:
+		is_sliding = true
+		if state == "small":
+			animated_sprite_2d.play("small_flagpole")
+			velocity = Vector2.ZERO
+		elif state == "big":
+			animated_sprite_2d.play("big_flagpole")
+			velocity = Vector2.ZERO
+		elif state == "fire":
+			animated_sprite_2d.play("fire_flagpole")
+			velocity = Vector2.ZERO
+
+func walk_to_castle():
+	if position.x < target_position.x:
+		position.x += 200 * get_process_delta_time()
