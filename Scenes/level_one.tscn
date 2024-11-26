@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://cblqcm07j1iun"]
+[gd_scene load_steps=18 format=4 uid="uid://cblqcm07j1iun"]
 
 [ext_resource type="PackedScene" uid="uid://be7kxaj60avw6" path="res://scenes/mario.tscn" id="1_wh4xu"]
 [ext_resource type="Texture2D" uid="uid://ix4she7qhgon" path="res://sprites/NES - Super Mario Bros - Tileset.png" id="3_dnmmw"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://bafg26o1vcq71" path="res://scenes/killzone.tscn" id="5_25q2r"]
 [ext_resource type="PackedScene" uid="uid://c3ysdxlew3krg" path="res://scenes/fireball.tscn" id="6_icwci"]
 [ext_resource type="PackedScene" uid="uid://4pvfbesis6d7" path="res://scenes/goomba.tscn" id="9_t4cil"]
+[ext_resource type="PackedScene" uid="uid://ct55ehfp1a632" path="res://scenes/koopa.tscn" id="10_wyxgn"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="11_swgj1"]
 
 [sub_resource type="GDScript" id="GDScript_fpwit"]
 script/source = "extends Node2D
@@ -6055,3 +6057,10 @@ shape = SubResource("WorldBoundaryShape2D_jaoiv")
 [node name="AI_Goomba" parent="." instance=ExtResource("9_t4cil")]
 position = Vector2(6255, -150)
 scale = Vector2(16, 16)
+
+[node name="AI_Koopa" parent="." groups=["Enemy"] instance=ExtResource("10_wyxgn")]
+position = Vector2(7709, -189)
+scale = Vector2(16, 16)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("11_swgj1")
