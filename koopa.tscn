@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ct55ehfp1a632"]
+[gd_scene load_steps=8 format=3 uid="uid://ct55ehfp1a632"]
 
 [ext_resource type="Texture2D" uid="uid://d1eg7i7ru8il" path="res://sprites/Koopa_Shell.png" id="1_ba0ih"]
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_c0jyv"]
@@ -28,7 +28,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fqd4p"]
-size = Vector2(16, 23)
+size = Vector2(16, 22.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mwk0s"]
+size = Vector2(16, 13)
 
 [node name="AI_Koopa" type="Area2D" groups=["Enemy", "Koopa"]]
 collision_layer = 4
@@ -39,11 +42,17 @@ script = ExtResource("1_c0jyv")
 position = Vector2(0, 2.98023e-08)
 scale = Vector2(1, 0.958333)
 sprite_frames = SubResource("SpriteFrames_f01av")
-animation = &"walk"
+animation = &"shell"
 autoplay = "walk"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="NormalCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.25)
 shape = SubResource("RectangleShape2D_fqd4p")
+
+[node name="ShellCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4.5)
+shape = SubResource("RectangleShape2D_mwk0s")
+disabled = true
 
 [node name="RayCastDown" type="RayCast2D" parent="."]
 target_position = Vector2(0, 11)
@@ -64,4 +73,8 @@ target_position = Vector2(8, 11)
 wait_time = 3.0
 one_shot = true
 
+[node name="GracePeriodTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="GracePeriodTimer" to="." method="_on_grace_period_timer_timeout"]

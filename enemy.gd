@@ -11,8 +11,13 @@ extends Area2D
 @onready var raycast_left = $RayCastLeft as RayCast2D
 @onready var raycast_right = $RayCastRight as RayCast2D
 @onready var animation = $AnimatedSprite2D as AnimatedSprite2D
+@onready var normal_collision_shape = $NormalCollisionShape2D
+@onready var shell_collision_shape = $ShellCollisionShape2D
 @onready var stomp_death_timer = $StompDeathTimer
 @onready var fire_death_timer = $FireDeathTimer
+@onready var grace_period_timer = $GracePeriodTimer
+
+var can_damage = false
 
 func _process(delta):
 	position.x -= delta * horizontal_speed
@@ -40,14 +45,20 @@ func get_in_shell(): # Koopa exclusive
 		vertical_speed = 0;
 		animation.play("shell")
 		isInShell = true
+		shell_collision_shape.disabled = false
+		normal_collision_shape.disabled = true
+		can_damage = false
 	else:
 		if isShellMoving:
 			horizontal_speed = 0
 			isShellMoving = false
+			can_damage = false
 
 func kick_shell(direction):
 	if isInShell and not isShellMoving:
 		isShellMoving = true
+		can_damage = false
+		grace_period_timer.start()
 		horizontal_speed = 900 * direction
 
 func _on_area_entered(area) -> void:
@@ -72,3 +83,7 @@ func _on_stomp_death_timer_timeout() -> void:
 
 func _on_fire_death_timer_timeout() -> void:
 	queue_free() # Removes goomba and koopa
+
+# Makes it so the initial shell kick does not damage Mario
+func _on_grace_period_timer_timeout() -> void:
+	can_damage = true
