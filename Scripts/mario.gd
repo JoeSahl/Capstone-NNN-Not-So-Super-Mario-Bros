@@ -22,10 +22,10 @@ const JUMP_VELOCITY = -2300.0
 var state = "small"
 
 var is_alive = true
-var is_sliding = false
-var sliding_velocity = Vector2(0, 100)
-var reached_bottom = false
-var target_position = Vector2(66055, 258)
+#var is_sliding = false
+#var sliding_velocity = Vector2(0, 100)
+#var reached_bottom = false
+#var target_position = Vector2(66055, 258)
 var is_big = false
 var is_fire = false
 var can_grow = true
@@ -244,6 +244,14 @@ func death():
 	animated_sprite_2d.play("death")
 	death_timer.start()
 
+func take_damage():
+	if state == "fire":
+		weaken()
+	elif state == "big":
+		shrink()
+	elif state == "small":
+		death()
+
 func _on_death_timer_timeout() -> void:
 	get_tree().reload_current_scene()
 
@@ -282,32 +290,30 @@ func handle_enemy_collision(area):
 	else:
 		var direction
 		if area.is_in_group("Koopa") and area.isInShell:
-			direction = -1
-			if animated_sprite_2d.flip_h:
-				direction = 1
-			area.kick_shell(direction)
+			if area.isShellMoving and area.can_damage:
+				take_damage()
+			else:
+				direction = -1
+				if animated_sprite_2d.flip_h:
+					direction = 1
+				area.kick_shell(direction)
 		else:
-			if state == "fire":
-				weaken()
-			elif state == "big":
-				shrink()
-			elif state == "small":
-				death()
+			take_damage()
 
 # Handles animation for beating the level (NOT DONE)
-func _on_flagpole_touched():
-	if not is_sliding:
-		is_sliding = true
-		if state == "small":
-			animated_sprite_2d.play("small_flagpole")
-			velocity = Vector2.ZERO
-		elif state == "big":
-			animated_sprite_2d.play("big_flagpole")
-			velocity = Vector2.ZERO
-		elif state == "fire":
-			animated_sprite_2d.play("fire_flagpole")
-			velocity = Vector2.ZERO
+#func _on_flagpole_touched():
+#	if not is_sliding:
+#		is_sliding = true
+#		if state == "small":
+#			animated_sprite_2d.play("small_flagpole")
+#			velocity = Vector2.ZERO
+#		elif state == "big":
+#			animated_sprite_2d.play("big_flagpole")
+#			velocity = Vector2.ZERO
+#		elif state == "fire":
+#			animated_sprite_2d.play("fire_flagpole")
+#			velocity = Vector2.ZERO
 
-func walk_to_castle():
-	if position.x < target_position.x:
-		position.x += 200 * get_process_delta_time()
+#func walk_to_castle():
+#	if position.x < target_position.x:
+#		position.x += 200 * get_process_delta_time()
