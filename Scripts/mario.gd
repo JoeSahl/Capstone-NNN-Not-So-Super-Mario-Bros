@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-# Might delete crouching mechanic from final product
-
 @export var fireball_scene: PackedScene
 var can_throw = true
 var is_throwing = false
@@ -132,11 +130,6 @@ func _big_movement(delta):
 		animated_sprite_2d.animation = "big_jump"
 	else:
 		velocity.y += GRAVITY * delta
-	
-	# Handles crouching.
-	if Input.is_action_pressed("crouch") and is_on_floor():
-		animated_sprite_2d.animation = "big_crouch"
-		velocity.x = 0;
 
 	move_and_slide()
 
@@ -155,11 +148,6 @@ func _fire_movement(delta):
 		animated_sprite_2d.animation = "fire_jump"
 	else:
 		velocity.y += GRAVITY * delta
-	
-	# Handles crouching.
-	if Input.is_action_pressed("crouch") and is_on_floor():
-		animated_sprite_2d.animation = "fire_crouch"
-		velocity.x = 0;
 
 	if Input.is_action_pressed("attack") and can_throw:
 		animated_sprite_2d.animation = "fire_throwing"
