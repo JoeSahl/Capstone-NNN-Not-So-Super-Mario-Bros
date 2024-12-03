@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://cblqcm07j1iun"]
+[gd_scene load_steps=20 format=4 uid="uid://cblqcm07j1iun"]
 
 [ext_resource type="PackedScene" uid="uid://be7kxaj60avw6" path="res://Scenes/mario.tscn" id="1_wh4xu"]
 [ext_resource type="Texture2D" uid="uid://mecfw3djeje8" path="res://Assets/Sprites/NES - Super Mario Bros - Tileset.png" id="3_dnmmw"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://binvn30wsb6vf" path="res://Scenes/goomba.tscn" id="9_t4cil"]
 [ext_resource type="PackedScene" uid="uid://cw8jlt02pjyvb" path="res://Scenes/koopa.tscn" id="10_wyxgn"]
 [ext_resource type="Script" path="res://Assets/Scripts/enemy.gd" id="11_swgj1"]
+[ext_resource type="PackedScene" uid="uid://dlffirk30ddnm" path="res://Scenes/ui.tscn" id="12_eku2s"]
+[ext_resource type="Script" path="res://Assets/Scripts/level_manager.gd" id="13_y3xxm"]
 
 [sub_resource type="GDScript" id="GDScript_fpwit"]
 script/source = "extends Node2D
@@ -6065,3 +6067,8 @@ script = ExtResource("11_swgj1")
 [node name="Coin" parent="." instance=ExtResource("4_7ksaq")]
 position = Vector2(2313.86, -1094.36)
 scale = Vector2(16, 16)
+
+[node name="UI" parent="." instance=ExtResource("12_eku2s")]
+
+[node name="LevelManager" type="Node" parent="."]
+script = ExtResource("13_y3xxm")

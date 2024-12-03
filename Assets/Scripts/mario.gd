@@ -12,6 +12,7 @@ var is_throwing = false
 @onready var fireball_timer = $FireballTimer
 @onready var death_timer = $DeathTimer
 @onready var flagpole = $"../Flagpole"
+@onready var ui = $"../UI"
 
 const GRAVITY = 1500.0
 const AIR_GRAVITY = 7000.0
@@ -242,6 +243,7 @@ func death():
 	is_alive = false
 	set_physics_process(false)
 	animated_sprite_2d.play("death")
+	ui.display_deathscreen()
 	death_timer.start()
 
 func take_damage():

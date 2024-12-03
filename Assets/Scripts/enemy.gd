@@ -14,6 +14,7 @@ class_name Enemy
 @onready var raycast_left = $RayCastLeft as RayCast2D
 @onready var raycast_right = $RayCastRight as RayCast2D
 @onready var animation = $AnimatedSprite2D as AnimatedSprite2D
+@onready var manager = $"../LevelManager"
 
 func _ready() -> void:
 	add_to_group("Enemy")
@@ -43,6 +44,7 @@ func die_to_stomp():
 	vertical_speed = 0;
 	animation.play("dead")
 	isdead = true
+	manager.score_increased(100)
 	await get_tree().create_timer(0.5).timeout
 	queue_free()
 
@@ -52,6 +54,7 @@ func get_in_shell():
 	isInShell = true
 	isShellMoving = false
 	can_damage = false
+	manager.score_increased(100)
 	
 func kick_shell(direction):
 	horizontal_speed = 1800*direction
