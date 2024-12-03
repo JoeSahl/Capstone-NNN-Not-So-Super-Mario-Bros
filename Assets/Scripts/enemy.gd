@@ -6,11 +6,17 @@ class_name Enemy
 @export var horizontal_speed = 800
 @export var vertical_speed = 1500
 @export var isdead = false
+@export var isInShell = false
+@export var isShellMoving = false
+@export var can_damage = false
 
 @onready var raycast_down = $RayCastDown as RayCast2D 
 @onready var raycast_left = $RayCastLeft as RayCast2D
 @onready var raycast_right = $RayCastRight as RayCast2D
 @onready var animation = $AnimatedSprite2D as AnimatedSprite2D
+
+func _ready() -> void:
+	add_to_group("Enemy")
 
 func _process(delta):
 	position.x -= delta * horizontal_speed
@@ -32,10 +38,25 @@ func _process(delta):
 		
 	
 		
-func die():
+func die_to_stomp():
 	horizontal_speed = 0;
 	vertical_speed = 0;
 	animation.play("dead")
 	isdead = true
 	await get_tree().create_timer(0.5).timeout
 	queue_free()
+
+func get_in_shell():
+	animation.play("dead")
+	horizontal_speed = 0
+	isInShell = true
+	isShellMoving = false
+	can_damage = false
+	
+func kick_shell(direction):
+	horizontal_speed = 1800*direction
+	isShellMoving = true
+	can_damage = true
+
+func die_to_fireball():
+	die_to_stomp()

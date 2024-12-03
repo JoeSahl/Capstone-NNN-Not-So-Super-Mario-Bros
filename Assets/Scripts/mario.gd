@@ -10,15 +10,22 @@ var is_throwing = false
 @onready var collision_shape_small = $SmallCollisionShape2D
 @onready var collision_shape_large = $Big_FireCollisionShape2D
 @onready var fireball_timer = $FireballTimer
+@onready var death_timer = $DeathTimer
+@onready var flagpole = $"../Flagpole"
 
 const GRAVITY = 1500.0
-const AIR_GRAVITY = 3900.0
+const AIR_GRAVITY = 7000.0
 const WALK_SPEED = 1000.0
 const RUN_SPEED = 1300.0
-const JUMP_VELOCITY = -2300.0
+const JUMP_VELOCITY = -3000.0
 
 var state = "small"
 
+var is_alive = true
+#var is_sliding = false
+#var sliding_velocity = Vector2(0, 100)
+#var reached_bottom = false
+#var target_position = Vector2(66055, 258)
 var is_big = false
 var is_fire = false
 var can_grow = true
@@ -28,8 +35,15 @@ func _ready():
 	collision_shape_small.disabled = false
 	collision_shape_large.disabled = true
 	fireball_timer.connect("timeout", Callable(self, "on_FireballTimer_timeout"))
+	if flagpole != null:
+		flagpole.connect("flagpole_touched", Callable(self, "_on_flagpole_touched"))
+	else:
+		print("no flagpole")
 
 func _physics_process(delta: float) -> void:
+	if not is_alive:
+		return
+	
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
@@ -65,6 +79,23 @@ func _physics_process(delta: float) -> void:
 		_big_movement(delta)
 	elif state == "fire":
 		_fire_movement(delta)
+
+# Helps handle sliding behavior
+#	if is_sliding:
+#		position.y += sliding_velocity.y * delta
+#		
+#		if position.y >= -41:
+#			is_sliding = false
+#			reached_bottom = true
+#			if state == "small":
+#				animated_sprite_2d.play("small_stationary")
+#				walk_to_castle()
+#			elif state == "big":
+#				animated_sprite_2d.play("big_stationary")
+#				walk_to_castle()
+#			elif state == "fire":
+#				animated_sprite_2d.play("fire_stationary")
+#				walk_to_castle()
 
 	move_and_slide()
 
@@ -188,16 +219,7 @@ func _on_fireball_timer_timeout() -> void:
 	is_throwing = false
 	can_throw = true
 
-# Handles shrinking after taking damage (NEEDS TESTING)
-func shrink():
-	state = "small"
-	is_big = false
-	can_grow = true
-	set_physics_process(false)
-	animated_sprite_2d.animation = "grow_&_shrink"
-	animated_sprite_2d.play_backwards()
-
-# Handles powering down after taking damage (NEEDS TESTING)
+# Handles powering down after taking damage
 func weaken():
 	state = "big"
 	is_fire = false
@@ -206,14 +228,36 @@ func weaken():
 	animated_sprite_2d.animation = "big_power_up"
 	animated_sprite_2d.play_backwards()
 
+# Handles shrinking after taking damage
+func shrink():
+	state = "small"
+	is_big = false
+	can_grow = true
+	set_physics_process(false)
+	animated_sprite_2d.animation = "grow_&_shrink"
+	animated_sprite_2d.play_backwards()
+
 # Handles deaths (NEEDS WORK)
 func death():
-	animated_sprite_2d.animation = "death"
-	animated_sprite_2d.play()
+	is_alive = false
+	set_physics_process(false)
+	animated_sprite_2d.play("death")
+	death_timer.start()
 
-# Handles animation for growing, shrinking, powering up, and attacking (NEEDS WORK)
+func take_damage():
+	if state == "fire":
+		weaken()
+	elif state == "big":
+		shrink()
+	elif state == "small":
+		death()
+
+func _on_death_timer_timeout() -> void:
+	get_tree().reload_current_scene()
+
+# Handles animation for growing, shrinking, and powering up
 func _on_animated_sprite_2d_animation_finished() -> void:
-	if animated_sprite_2d.animation == "grow_&_shrink":
+	if animated_sprite_2d.animation == "grow_&_shrink" or animated_sprite_2d.animation == "small_power_up" or animated_sprite_2d.animation == "big_power_up":
 		if state == "big":
 			animated_sprite_2d.animation = "big_stationary"
 			animated_sprite_2d.play()
@@ -222,21 +266,54 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 			animated_sprite_2d.animation = "small_stationary"
 			animated_sprite_2d.play()
 			set_physics_process(true)
-	elif animated_sprite_2d.animation == "small_power_up" or animated_sprite_2d.animation == "big_power_up":
-		if state == "fire":
+		elif state == "fire":
 			animated_sprite_2d.animation = "fire_stationary"
 			animated_sprite_2d.play()
 			set_physics_process(true)
-#	elif animated_sprite_2d.animation == "fire_throwing":
-#		if state == "fire":
-#			animated_sprite_2d.animation = "fire_stationary"
-#			animated_sprite_2d.play()
 
-# Handles animation for reaching the flagpole (NOT DONE)
-func poleReached():
-	if state == "small":
-		animated_sprite_2d.animation = "small_flagpole"
-		animated_sprite_2d.play()
-	elif state == "big":
-		animated_sprite_2d.animation = "big_flagpole"
-		animated_sprite_2d.play()
+# Handles interactions with enemies (NOT DONE/NEEDS KOOPA BEHAVIOR)
+func _on_hitbox_area_entered(area) -> void:
+	if area.is_in_group("Enemy") and is_alive:
+		handle_enemy_collision(area)
+
+func handle_enemy_collision(area):
+	if area == null:
+		return
+
+	if velocity.y > 0:
+		if area.is_in_group("Goomba") and area.get_node("AnimatedSprite2D").animation != "dead":
+			velocity.y = JUMP_VELOCITY/2
+			area.die_to_stomp()
+		if area.is_in_group("Koopa"):
+			velocity.y = JUMP_VELOCITY/2
+			area.get_in_shell()
+	else:
+		var direction
+		if area.is_in_group("Koopa") and area.isInShell:
+			if area.isShellMoving and area.can_damage:
+				take_damage()
+			else:
+				direction = -1
+				if animated_sprite_2d.flip_h:
+					direction = 1
+				area.kick_shell(direction)
+		else:
+			take_damage()
+
+# Handles animation for beating the level (NOT DONE)
+#func _on_flagpole_touched():
+#	if not is_sliding:
+#		is_sliding = true
+#		if state == "small":
+#			animated_sprite_2d.play("small_flagpole")
+#			velocity = Vector2.ZERO
+#		elif state == "big":
+#			animated_sprite_2d.play("big_flagpole")
+#			velocity = Vector2.ZERO
+#		elif state == "fire":
+#			animated_sprite_2d.play("fire_flagpole")
+#			velocity = Vector2.ZERO
+
+#func walk_to_castle():
+#	if position.x < target_position.x:
+#		position.x += 200 * get_process_delta_time()

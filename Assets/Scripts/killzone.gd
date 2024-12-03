@@ -2,8 +2,7 @@ extends Area2D
 
 @onready var timer = $Timer
 
-func _on_body_entered(body: Node2D) -> void:
-	body.get_node("SmallCollisionShape2D").queue_free()
+func _on_body_entered(body) -> void:
 	timer.start()
 
 

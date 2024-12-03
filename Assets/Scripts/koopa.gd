@@ -1,10 +1,13 @@
 extends Enemy
 
 #die() override for koopa
-func die():
-	if animation.animation != "dead":
-		animation.play("dead")
-		horizontal_speed = 100
+
+	
+func kick_shell(direction):
+	horizontal_speed = 1800*direction
+
+func die_to_fireball():
+	if isInShell:
+		queue_free()
 	else:
-		horizontal_speed = 0
-		isdead = true
+		get_in_shell()
