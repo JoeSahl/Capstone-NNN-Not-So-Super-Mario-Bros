@@ -20,10 +20,6 @@ const JUMP_VELOCITY = -2300.0
 var state = "small"
 
 var is_alive = true
-#var is_sliding = false
-#var sliding_velocity = Vector2(0, 100)
-#var reached_bottom = false
-#var target_position = Vector2(66055, 258)
 var is_big = false
 var is_fire = false
 var can_grow = true
@@ -33,10 +29,6 @@ func _ready():
 	collision_shape_small.disabled = false
 	collision_shape_large.disabled = true
 	fireball_timer.connect("timeout", Callable(self, "on_FireballTimer_timeout"))
-	if flagpole != null:
-		flagpole.connect("flagpole_touched", Callable(self, "_on_flagpole_touched"))
-	else:
-		print("no flagpole")
 
 func _physics_process(delta: float) -> void:
 	if not is_alive:
@@ -77,23 +69,6 @@ func _physics_process(delta: float) -> void:
 		_big_movement(delta)
 	elif state == "fire":
 		_fire_movement(delta)
-
-# Helps handle sliding behavior
-#	if is_sliding:
-#		position.y += sliding_velocity.y * delta
-#		
-#		if position.y >= -41:
-#			is_sliding = false
-#			reached_bottom = true
-#			if state == "small":
-#				animated_sprite_2d.play("small_stationary")
-#				walk_to_castle()
-#			elif state == "big":
-#				animated_sprite_2d.play("big_stationary")
-#				walk_to_castle()
-#			elif state == "fire":
-#				animated_sprite_2d.play("fire_stationary")
-#				walk_to_castle()
 
 	move_and_slide()
 
@@ -225,7 +200,7 @@ func shrink():
 	animated_sprite_2d.animation = "grow_&_shrink"
 	animated_sprite_2d.play_backwards()
 
-# Handles deaths (NEEDS WORK)
+# Handles deaths
 func death():
 	is_alive = false
 	set_physics_process(false)
@@ -259,7 +234,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 			animated_sprite_2d.play()
 			set_physics_process(true)
 
-# Handles interactions with enemies (NOT DONE/NEEDS KOOPA BEHAVIOR)
+# Handles interactions with enemies
 func _on_hitbox_area_entered(area) -> void:
 	if area.is_in_group("Enemy") and is_alive:
 		handle_enemy_collision(area)
@@ -287,21 +262,3 @@ func handle_enemy_collision(area):
 				area.kick_shell(direction)
 		else:
 			take_damage()
-
-# Handles animation for beating the level (NOT DONE)
-#func _on_flagpole_touched():
-#	if not is_sliding:
-#		is_sliding = true
-#		if state == "small":
-#			animated_sprite_2d.play("small_flagpole")
-#			velocity = Vector2.ZERO
-#		elif state == "big":
-#			animated_sprite_2d.play("big_flagpole")
-#			velocity = Vector2.ZERO
-#		elif state == "fire":
-#			animated_sprite_2d.play("fire_flagpole")
-#			velocity = Vector2.ZERO
-
-#func walk_to_castle():
-#	if position.x < target_position.x:
-#		position.x += 200 * get_process_delta_time()
