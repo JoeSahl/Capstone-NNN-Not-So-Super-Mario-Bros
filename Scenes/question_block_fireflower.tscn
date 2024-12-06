@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://cnvkgp3jmah7t"]
+
+[ext_resource type="Script" path="res://scripts/question_block_fireflower.gd" id="1_ljqfc"]
+[ext_resource type="Texture2D" uid="uid://qfo4aan4hrxg" path="res://sprites/questionblock.png" id="2_oc5pe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_try5w"]
+size = Vector2(16, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3d2r6"]
+size = Vector2(16, 12)
+
+[node name="QuestionBlockFireFlower" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_ljqfc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_oc5pe")
+hframes = 2
+
+[node name="HitboxCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_try5w")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="ItemBoxCollision" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_3d2r6")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
