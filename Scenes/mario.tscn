@@ -1,7 +1,8 @@
-[gd_scene load_steps=41 format=3 uid="uid://be7kxaj60avw6"]
+[gd_scene load_steps=42 format=3 uid="uid://be7kxaj60avw6"]
 
 [ext_resource type="Script" path="res://scripts/mario.gd" id="1_cplvl"]
 [ext_resource type="Texture2D" uid="uid://cc84mdnh7uy64" path="res://sprites/extra_mario_sprites.png" id="1_t31f0"]
+[ext_resource type="PackedScene" uid="uid://c3ysdxlew3krg" path="res://scenes/fireball.tscn" id="2_gdasw"]
 [ext_resource type="Texture2D" uid="uid://b75ik6jxthooh" path="res://sprites/Mario_Big_Pole.png" id="2_vijui"]
 [ext_resource type="Texture2D" uid="uid://dep8iuq24h7qk" path="res://sprites/Mario_Big_Jump.png" id="3_hfwiy"]
 [ext_resource type="Texture2D" uid="uid://1dh5pd6g7dud" path="res://sprites/Mario_Big_Idle.png" id="4_q17w8"]
@@ -330,12 +331,13 @@ position = Vector2(381, 460)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_cplvl")
+fireball_scene = ExtResource("2_gdasw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(201.75, -137.875)
 scale = Vector2(16.9063, 16.6406)
 sprite_frames = SubResource("SpriteFrames_dbjqc")
-animation = &"death"
+animation = &"small_stationary"
 autoplay = "small_stationary"
 speed_scale = 2.0
 
