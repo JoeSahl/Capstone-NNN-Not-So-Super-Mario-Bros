@@ -22,6 +22,9 @@ const JUMP_VELOCITY = -3000.0
 
 var state = "small"
 
+var pause_input = false
+var flagpole1_anim = false
+
 var is_alive = true
 #var is_sliding = false
 #var sliding_velocity = Vector2(0, 100)
@@ -44,6 +47,26 @@ func _ready():
 func _physics_process(delta: float) -> void:
 	if not is_alive:
 		return
+		
+	#returns immediately which means player cannot move
+	if pause_input:
+		return
+		
+	# Note to Zach: This function pauses player input and animates
+	# Mario after he reaches the flagpole
+	if flagpole1_anim:
+		if position.y < 314:
+			position.y += 400*delta
+			return
+		animated_sprite_2d.play("%s_walking" % state)
+		if position.x < 66000:
+			position.x += 800*delta
+			return
+		var l1 = $".."
+		l1.victory()
+		
+	# Note to Zach: I will add flagpole2 and axe animations after this line
+	# the same way I did for the first flagpole
 	
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
@@ -80,23 +103,6 @@ func _physics_process(delta: float) -> void:
 		_big_movement(delta)
 	elif state == "fire":
 		_fire_movement(delta)
-
-# Helps handle sliding behavior
-#	if is_sliding:
-#		position.y += sliding_velocity.y * delta
-#		
-#		if position.y >= -41:
-#			is_sliding = false
-#			reached_bottom = true
-#			if state == "small":
-#				animated_sprite_2d.play("small_stationary")
-#				walk_to_castle()
-#			elif state == "big":
-#				animated_sprite_2d.play("big_stationary")
-#				walk_to_castle()
-#			elif state == "fire":
-#				animated_sprite_2d.play("fire_stationary")
-#				walk_to_castle()
 
 	move_and_slide()
 
@@ -302,20 +308,31 @@ func handle_enemy_collision(area):
 		else:
 			take_damage()
 
-# Handles animation for beating the level (NOT DONE)
-#func _on_flagpole_touched():
-#	if not is_sliding:
-#		is_sliding = true
-#		if state == "small":
-#			animated_sprite_2d.play("small_flagpole")
-#			velocity = Vector2.ZERO
-#		elif state == "big":
-#			animated_sprite_2d.play("big_flagpole")
-#			velocity = Vector2.ZERO
-#		elif state == "fire":
-#			animated_sprite_2d.play("fire_flagpole")
-#			velocity = Vector2.ZERO
 
-#func walk_to_castle():
-#	if position.x < target_position.x:
-#		position.x += 200 * get_process_delta_time()
+func flagpole1_touched():
+	pause_input = true
+	if state == "small":
+		animated_sprite_2d.play("small_flagpole")
+		velocity = Vector2.ZERO
+		await get_tree().create_timer(0.5).timeout
+		flagpole1_anim = true
+		pause_input = false
+		
+	elif state == "big":
+		animated_sprite_2d.play("big_flagpole")
+		velocity = Vector2.ZERO
+		await get_tree().create_timer(0.5).timeout
+		flagpole1_anim = true
+		pause_input = false
+		
+	elif state == "fire":
+		animated_sprite_2d.play("fire_flagpole")
+		velocity = Vector2.ZERO
+		await get_tree().create_timer(0.5).timeout
+		flagpole1_anim = true
+		pause_input = false
+		
+
+#func flagpole2_touched()
+
+#func flagpole3_touched()

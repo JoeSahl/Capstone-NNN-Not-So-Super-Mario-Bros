@@ -1,6 +1,6 @@
 extends Node
 
-class_name LevelManager
+class_name Level2Manager
 
 var points = 0
 var coins = 0
@@ -8,13 +8,18 @@ var coins = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
+func carry_points(score: int, coins: int):
+	ui.setscore(score)
+	ui.setcoins(coins)
+	points = score
+	self.coins = coins
 
 func coin_collected():
 	coins += 1

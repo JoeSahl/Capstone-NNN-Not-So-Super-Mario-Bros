@@ -31,7 +31,7 @@ animations = [{
 size = Vector2(192, 192)
 
 [node name="AI_Goomba" type="Area2D"]
-collision_layer = 2
+collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_fxta7")
 
@@ -58,11 +58,11 @@ target_position = Vector2(-96, 0)
 position = Vector2(96, -96)
 target_position = Vector2(96, 0)
 
-[node name="RayCastBottomLeft" type="RayCast2D" parent="."]
+[node name="RayCastBL" type="RayCast2D" parent="."]
 position = Vector2(96, -96)
 target_position = Vector2(-160, 160)
 
-[node name="RayCastBottomRight" type="RayCast2D" parent="."]
+[node name="RayCastBR" type="RayCast2D" parent="."]
 position = Vector2(96, -96)
 target_position = Vector2(160, 160)
 

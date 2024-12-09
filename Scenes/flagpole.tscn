@@ -1,17 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://dhv1phnor1ctp"]
+[gd_scene load_steps=6 format=3 uid="uid://dhv1phnor1ctp"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/flagpole.gd" id="1_e4xww"]
-[ext_resource type="Texture2D" uid="uid://mecfw3djeje8" path="res://Assets/Sprites/NES - Super Mario Bros - Tileset.png" id="2_j3r57"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pe7tc"]
-atlas = ExtResource("2_j3r57")
-region = Rect2(0, 593, 16, 171)
+[ext_resource type="Texture2D" uid="uid://c7ms6bya2q5a1" path="res://Assets/Sprites/flagpole.png" id="2_hil5a"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6qnoh"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pe7tc")
+"texture": ExtResource("2_hil5a")
 }],
 "loop": true,
 "name": &"default",
@@ -25,6 +21,7 @@ size = Vector2(2, 143)
 size = Vector2(16, 17)
 
 [node name="Flagpole" type="Area2D"]
+collision_mask = 3
 script = ExtResource("1_e4xww")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -38,4 +35,5 @@ shape = SubResource("RectangleShape2D_mn615")
 position = Vector2(0, 77.5)
 shape = SubResource("RectangleShape2D_dgd3q")
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

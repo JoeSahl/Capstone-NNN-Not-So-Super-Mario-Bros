@@ -335,7 +335,7 @@ script = ExtResource("1_cplvl")
 position = Vector2(201.75, -137.875)
 scale = Vector2(16.9063, 16.6406)
 sprite_frames = SubResource("SpriteFrames_dbjqc")
-animation = &"death"
+animation = &"small_walking"
 autoplay = "small_stationary"
 speed_scale = 2.0
 
