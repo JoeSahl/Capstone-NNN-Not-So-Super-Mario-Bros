@@ -25,6 +25,8 @@ animations = [{
 size = Vector2(33, 42)
 
 [node name="Bowser" type="Area2D"]
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_0uemc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -37,3 +39,5 @@ shape = SubResource("RectangleShape2D_2x3nc")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(0, 21)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

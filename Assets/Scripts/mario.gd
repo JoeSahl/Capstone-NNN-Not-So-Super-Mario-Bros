@@ -271,6 +271,7 @@ func take_damage():
 
 func _on_death_timer_timeout() -> void:
 	get_tree().reload_current_scene()
+	print("Tried to reload")
 
 # Handles animation for growing, shrinking, and powering up
 func _on_animated_sprite_2d_animation_finished() -> void:
@@ -365,3 +366,9 @@ func flagpole2_touched():
 		flagpole2_anim = true
 		pause_input = false
 #func flagpole3_touched()
+
+
+func _on_axe_area_entered(area: Area2D) -> void:
+	pause_input = true
+	ui.display_winscreen()
+	animated_sprite_2d.play("%s_stationary" % state)

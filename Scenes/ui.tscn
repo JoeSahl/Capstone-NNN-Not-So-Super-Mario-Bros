@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://dlffirk30ddnm"]
+[gd_scene load_steps=4 format=3 uid="uid://dlffirk30ddnm"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ui.gd" id="1_ur5v8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r6jcg"]
 bg_color = Color(0.910153, 0.42745, 0.448149, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2v7hq"]
+bg_color = Color(0.40077, 0.682497, 0.337316, 1)
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_ur5v8")
@@ -33,17 +36,18 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "COINS: 0000"
 
-[node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
+[node name="YouLoseContainer" type="CenterContainer" parent="MarginContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Panel" type="Panel" parent="MarginContainer/CenterContainer"]
+[node name="Panel" type="Panel" parent="MarginContainer/YouLoseContainer"]
 custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_r6jcg")
 
-[node name="Label" type="Label" parent="MarginContainer/CenterContainer/Panel"]
+[node name="Label" type="Label" parent="MarginContainer/YouLoseContainer/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -58,3 +62,27 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 35
 text = "GAME OVER"
+
+[node name="YouWinContainer" type="CenterContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="MarginContainer/YouWinContainer"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2v7hq")
+
+[node name="Label" type="Label" parent="MarginContainer/YouWinContainer/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 35
+text = "YOU WIN!"
