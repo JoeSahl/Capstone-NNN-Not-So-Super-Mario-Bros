@@ -61,10 +61,10 @@ target_position = Vector2(128, 0)
 
 [node name="RayCastBL" type="RayCast2D" parent="."]
 position = Vector2(128, -160)
-target_position = Vector2(-168, 200)
+target_position = Vector2(-192, 224)
 
 [node name="RayCastBR" type="RayCast2D" parent="."]
 position = Vector2(128, -160)
-target_position = Vector2(160, 192)
+target_position = Vector2(192, 224)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

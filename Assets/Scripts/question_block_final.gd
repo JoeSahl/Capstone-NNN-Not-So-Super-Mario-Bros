@@ -2,10 +2,12 @@ extends Area2D
 
 @export var spawned_ypos_offset = 600
 @export var world_scale = 20
+@export var coin_only = false
 
 enum State { UNTOUCHED, TOUCHED}
 var state: int = State.UNTOUCHED
 var original_position: Vector2
+var rng = RandomNumberGenerator.new()
 
 func _ready():
 	original_position = position
@@ -22,7 +24,14 @@ func bump_block():
 	
 	#Global.spawn_beer_bottle(self.global_position + Vector2(0, -20))
 	bump_upwards()
+	var choice = rng.randi_range(0, 9)
+	if coin_only:
+		choice = 5
 	var coin_scene = load("res://Scenes/coin.tscn")
+	if choice == 0:
+		coin_scene = load("res://Scenes/fire_flower.tscn")
+	elif choice == 1:
+		coin_scene = load("res://Scenes/mushroom.tscn")
 	var coin = coin_scene.instantiate()
 	get_parent().add_child(coin)
 	coin.scale.x = world_scale

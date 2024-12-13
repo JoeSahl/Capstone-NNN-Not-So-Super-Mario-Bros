@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bovy614tnovul"]
 
 [ext_resource type="Texture2D" uid="uid://dp7aensl4rm52" path="res://Assets/Sprites/Brick.png" id="1_hftc7"]
-[ext_resource type="PackedScene" uid="uid://od0wk3kx2vx3" path="res://Scenes/mario.tscn" id="2_stnag"]
+[ext_resource type="PackedScene" uid="uid://be7kxaj60avw6" path="res://Scenes/mario.tscn" id="2_stnag"]
 [ext_resource type="PackedScene" uid="uid://cw8jlt02pjyvb" path="res://Scenes/koopa.tscn" id="3_ckevi"]
 [ext_resource type="PackedScene" uid="uid://binvn30wsb6vf" path="res://Scenes/goomba.tscn" id="4_jal7m"]
 

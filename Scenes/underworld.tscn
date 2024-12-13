@@ -5751,6 +5751,7 @@ tile_set = SubResource("TileSet_yi8s7")
 position = Vector2(153, -48)
 spawned_ypos_offset = 20
 world_scale = 1
+coin_only = true
 
 [node name="QuestionBlockFinal2" parent="." instance=ExtResource("2_1edne")]
 position = Vector2(1433, -64)
@@ -5761,7 +5762,7 @@ world_scale = 1
 position = Vector2(2664, -86)
 
 [node name="Mario" parent="." instance=ExtResource("4_v18s6")]
-position = Vector2(2488.25, -28.1462)
+position = Vector2(43.812, -16.6057)
 scale = Vector2(0.06, 0.06)
 
 [node name="Camera2D" type="Camera2D" parent="Mario"]
@@ -5799,3 +5800,52 @@ script = ExtResource("9_vjopp")
 position = Vector2(2609.03, -53.7859)
 spawned_ypos_offset = 20
 world_scale = 1
+
+[node name="AI_Goomba2" parent="." groups=["Enemy", "Goomba"] instance=ExtResource("7_kciq5")]
+position = Vector2(451.018, -15.4047)
+scale = Vector2(0.07, 0.07)
+horizontal_speed = 50
+vertical_speed = 75
+contact_jump = 4
+
+[node name="AI_Goomba3" parent="." groups=["Enemy", "Goomba"] instance=ExtResource("7_kciq5")]
+position = Vector2(677.232, -26.6319)
+scale = Vector2(0.07, 0.07)
+horizontal_speed = 50
+vertical_speed = 75
+contact_jump = 4
+
+[node name="AI_Goomba4" parent="." groups=["Enemy", "Goomba"] instance=ExtResource("7_kciq5")]
+position = Vector2(2383.5, -53.0026)
+scale = Vector2(0.07, 0.07)
+horizontal_speed = 50
+vertical_speed = 75
+contact_jump = 4
+
+[node name="AI_Goomba5" parent="." groups=["Enemy", "Goomba"] instance=ExtResource("7_kciq5")]
+position = Vector2(1787.31, -46.3185)
+scale = Vector2(0.07, 0.07)
+horizontal_speed = 50
+vertical_speed = 75
+contact_jump = 4
+
+[node name="AI_Goomba6" parent="." groups=["Enemy", "Goomba"] instance=ExtResource("7_kciq5")]
+position = Vector2(1517.55, -51.906)
+scale = Vector2(0.07, 0.07)
+horizontal_speed = 50
+vertical_speed = 75
+contact_jump = 4
+
+[node name="AI_Goomba7" parent="." groups=["Enemy", "Goomba"] instance=ExtResource("7_kciq5")]
+position = Vector2(1183.13, -36.4491)
+scale = Vector2(0.07, 0.07)
+horizontal_speed = 50
+vertical_speed = 75
+contact_jump = 4
+
+[node name="AI_Goomba8" parent="." groups=["Enemy", "Goomba"] instance=ExtResource("7_kciq5")]
+position = Vector2(935.822, -30.8616)
+scale = Vector2(0.07, 0.07)
+horizontal_speed = 50
+vertical_speed = 75
+contact_jump = 4
