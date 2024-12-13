@@ -1,6 +1,6 @@
-This is the Fall 2024 Capstone project of Rafe Ewert, Zachary Ortiz, and Joseph Sahl.
+This is the Fall 2024 Capstone project of Rafe Ewert, Zachary Ortiz, and Joseph Sahl.<br/>
 
---IN ORDER TO RUN--
+--IN ORDER TO RUN--<br/>
 Please navigate to releases, and download SNES_Mario.exe and SNES_Mario.pck<br/>
 Make sure that the .exe file and .pck file are in the same folder/directory<br/>
 Run SNES_Mario.exe<br/>
