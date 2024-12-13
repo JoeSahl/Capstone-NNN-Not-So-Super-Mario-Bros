@@ -5811,7 +5811,7 @@ position = Vector2(7359, 168)
 script = SubResource("GDScript_fpwit")
 
 [node name="Mario" parent="." instance=ExtResource("1_wh4xu")]
-position = Vector2(61239, -2434)
+position = Vector2(62328, 126)
 fireball_scene = ExtResource("6_icwci")
 
 [node name="Camera2D" type="Camera2D" parent="Mario"]
@@ -5926,7 +5926,7 @@ position = Vector2(54942, -172)
 scale = Vector2(1.3, 1.3)
 
 [node name="AI_Goomba16" parent="." groups=["Enemy", "Goomba"] instance=ExtResource("11_3un3c")]
-position = Vector2(62270, 27)
+position = Vector2(57300, -69)
 scale = Vector2(1.3, 1.3)
 
 [node name="QuestionBlockFinal" parent="." instance=ExtResource("13_poo5y")]

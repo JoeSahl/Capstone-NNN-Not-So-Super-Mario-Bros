@@ -24,6 +24,7 @@ var state = "small"
 
 var pause_input = false
 var flagpole1_anim = false
+var flagpole2_anim = false
 
 var is_alive = true
 #var is_sliding = false
@@ -65,8 +66,16 @@ func _physics_process(delta: float) -> void:
 		var l1 = $".."
 		l1.victory()
 		
-	# Note to Zach: I will add flagpole2 and axe animations after this line
-	# the same way I did for the first flagpole
+	if flagpole2_anim:
+		if position.y < 0:
+			position.y += 40*delta
+			return
+		animated_sprite_2d.play("%s_walking" % state)
+		if position.x < 2735:
+			position.x += 80*delta
+			return
+		var l2 = $".."
+		l2.victory()
 	
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
@@ -333,6 +342,26 @@ func flagpole1_touched():
 		pause_input = false
 		
 
-#func flagpole2_touched()
-
+func flagpole2_touched():
+	pause_input = true
+	if state == "small":
+		animated_sprite_2d.play("small_flagpole")
+		velocity = Vector2.ZERO
+		await get_tree().create_timer(0.5).timeout
+		flagpole2_anim = true
+		pause_input = false
+		
+	elif state == "big":
+		animated_sprite_2d.play("big_flagpole")
+		velocity = Vector2.ZERO
+		await get_tree().create_timer(0.5).timeout
+		flagpole2_anim = true
+		pause_input = false
+		
+	elif state == "fire":
+		animated_sprite_2d.play("fire_flagpole")
+		velocity = Vector2.ZERO
+		await get_tree().create_timer(0.5).timeout
+		flagpole2_anim = true
+		pause_input = false
 #func flagpole3_touched()
